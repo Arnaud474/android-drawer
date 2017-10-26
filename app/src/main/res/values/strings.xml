@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Food</string>
+    <array name="sections">
+        <item>Search</item>
+        <item>My Recipes</item>
+    </array>
+    <string name="drawer_open">Drawer is opened</string>
+    <string name="drawer_close">Drawer is closed</string>
+</resources>
