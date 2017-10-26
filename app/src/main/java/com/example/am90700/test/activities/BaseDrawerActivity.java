@@ -33,10 +33,15 @@ public abstract class BaseDrawerActivity extends AppCompatActivity {
         drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_section, sections));
         drawerList.setOnItemClickListener(new DrawerClickListener());
 
+        Log.d("DRAWER", "START");
+
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close){
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                Log.d("DRAWER", "OPENED");
                 invalidateOptionsMenu();
 
             }
@@ -44,9 +49,13 @@ public abstract class BaseDrawerActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                Log.d("DRAWER", "CLOSED");
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 invalidateOptionsMenu();
             }
         };
+
+        drawerLayout.addDrawerListener(drawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -55,12 +64,17 @@ public abstract class BaseDrawerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
+
+        if(android.R.id.home == item.getItemId()){
+            Log.d("ACTIONBAR", "HOME BUTTON PRESSED");
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
-        // Handle your other action bar items...
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+
+            return true;
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
